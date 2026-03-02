@@ -1,31 +1,46 @@
 <script setup>
+import { ref, useTemplateRef, shallowRef } from 'vue';
 import FoodSearch from './components/FoodSearch.vue'
 import FabMenu from './components/FabMenu.vue'
 import DishSummary from './components/DishSummary.vue'
-import { computed, reactive } from 'vue'
-import { useSettingsStore } from './stores/settings'
+import { useEditStore } from './stores/edit'
+import DefaultModal from './components/DefaultModal.vue'
+import DishForm from './components/DishForm.vue';
 
-const list = reactive([])
-const renderList = computed(() => list.length ? list : null)
-const { settings } = useSettingsStore();
+const { ingredients, addIngredient, reset } = useEditStore()
+const modal = useTemplateRef('modal')
+const modalTitle = ref(null)
+const component = shallowRef(null)
 
-function add(food) {
-  list.push({ ...food, ...{ weight: settings.weight } })
+const save = () => {
+  modalTitle.value = null
+  component.value = DishForm
+  modal.value.ref.showModal()
+}
+
+const open = () => {
+
 }
 </script>
 
 <template>
   <header>
-    <h1 class="text-4xl font-extrabold pb-2 text-center sm:text-6xl sm:pb-3">
-      <span class="text-accent">viktigt</span>.fat<span class="text-secondary">max</span>.se
+    <h1 class="text-4xl font-extrabold pb-2 text-center sm:text-6xl sm:pb-3 text-secondary">
+      viktigt
     </h1>
-    <FoodSearch @add-food="add" />
+    <FoodSearch @selected="addIngredient" />
   </header>
 
   <main>
-    <DishSummary :list="renderList" />
+    <DishSummary :ingredients="ingredients" :reset="reset" :save="save" />
 
-    <button class="btn" onclick="info_modal.showModal()">open modal</button>
+    <DefaultModal ref="modal" :title="modalTitle">
+      <component :is="component"></component>
+    </DefaultModal>
+    <!-- <button class="btn" onclick="console.log(default_modal)" @click="open">open modal</button> -->
+    <!-- <button class="btn" onclick="default_modal.showModal()">open modal</button> -->
+
+    <!-- <button class="btn" onclick="info_modal.showModal()">open modal</button>
     <dialog id="info_modal" class="modal modal-bottom sm:modal-middle">
       <div class="modal-box">
         <h3 class="text-lg font-bold">Hello!</h3>
@@ -51,7 +66,7 @@ function add(food) {
       <form method="dialog" class="modal-backdrop">
         <button>close</button>
       </form>
-    </dialog>
+    </dialog> -->
   </main>
   <FabMenu />
 </template>

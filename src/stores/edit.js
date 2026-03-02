@@ -1,19 +1,23 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
+import { useSettingsStore } from './settings'
 
 export const useEditStore = defineStore('edit', () => {
-  const ingredients = ref([])
+  const list = ref([])
+  const { settings } = useSettingsStore()
 
   function addIngredient(ingredient) {
-    if (list.some(l => l.Livsmedelsnummer == ingredient.Livsmedelsnummer)) return;
+    if (list.value.some(l => l.Livsmedelsnummer == ingredient.Livsmedelsnummer)) return;
 
-    list.push(ingredient)
+    list.value.push({...ingredient, ...{weight: settings.weight}})
   }
 
-  function updateWeight(ingredient, weigth) {
-
+  const reset = () => {
+    list.value = []
   }
 
-  return { ingredients }
+  const ingredients = computed(() => list )
+
+  return { ingredients, addIngredient, reset }
 })

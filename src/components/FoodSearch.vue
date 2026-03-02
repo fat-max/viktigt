@@ -1,20 +1,19 @@
 <script setup>
 import { computed, reactive } from 'vue'
-import food from '@/data/nutrients.json'
+import nutrients from '@/data/nutrients.json'
 
-const emit = defineEmits(['addFood'])
+const emit = defineEmits(['selected'])
 const state = reactive({ search: '' })
 
-const filtered = computed(() => state.search.length < 3 ? null : food.filter(f => f.Livsmedelsnamn
+const filtered = computed(() => state.search.length < 3 ? null : nutrients.filter(f => f.Livsmedelsnamn
   .toLowerCase()
   .includes(state.search.toLowerCase())
 ))
 
-function add(food) {
-  emit('addFood', food)
+function select(ingredient) {
+  emit('selected', ingredient)
   state.search = ''
 }
-
 </script>
 
 <template>
@@ -31,8 +30,8 @@ function add(food) {
 
     <div class="absolute z-10 w-full h-56 overflow-y-scroll" v-if="filtered">
       <ul class="menu menu-sm bg-base-200 rounded-box w-full">
-        <li v-for="food in filtered" :key="food.Livsmedelsnamn">
-          <a @click="add(food)">{{ food.Livsmedelsnamn }}</a>
+        <li v-for="ingredient in filtered" :key="ingredient.Livsmedelsnamn">
+          <a @click="select(ingredient)">{{ ingredient.Livsmedelsnamn }}</a>
         </li>
       </ul>
     </div>
