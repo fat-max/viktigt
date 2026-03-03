@@ -1,0 +1,6 @@
+import IconCogs from './IconCogs.vue'
+import IconDots from './IconDots.vue'
+import IconInfo from './IconInfo.vue'
+import IconProfile from './IconProfile.vue'
+
+export { IconCogs, IconDots, IconInfo, IconProfile }
