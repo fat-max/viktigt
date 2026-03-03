@@ -3,7 +3,13 @@ import { ref } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
 
 export const useTagsStore = defineStore('tags', () => {
-  const tags =  useLocalStorage<string[]>('tags', ['frukost', 'lunch', 'mellanmål', 'middag', 'kvällsmat'])
+  const tags = useLocalStorage<string[]>('tags', [
+    'frukost',
+    'lunch',
+    'mellanmål',
+    'middag',
+    'kvällsmat',
+  ])
 
   function addTag(tag: string) {
     tag = tag.toLowerCase()

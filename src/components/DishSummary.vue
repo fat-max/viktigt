@@ -9,8 +9,7 @@ interface Props {
   reset?: () => void
 }
 
-const { ingredients = [], save = () => { }, reset = () => { } } = defineProps<Props>()
-
+const { ingredients = [], save = () => {}, reset = () => {} } = defineProps<Props>()
 
 const nutrients = computed(() => {
   if (!ingredients) return null
@@ -22,7 +21,7 @@ const nutrients = computed(() => {
     { type: 'carbs', label: 'Kolhydrater (g)', amount: 0 },
   ]
 
-  ingredients.forEach(ingredient => {
+  ingredients.forEach((ingredient) => {
     const amount = ingredient.weight / 100
     // @ts-ignore
     nutrients[0].amount += ingredient['Energi (kcal)'] * amount
@@ -51,11 +50,23 @@ function color(type: string) {
     <div class="grid grid-cols-4 gap-2 my-4">
       <div v-for="n in nutrients" :key="n.type" class="flex flex-col gap-2 cursor-default">
         <div class="stat-title">{{ n.label }}</div>
-        <div class="flex gap-2 w-full font-extrabold text-3xl items-center justify-center" :class="color(n.type)">
+        <div
+          class="flex gap-2 w-full font-extrabold text-3xl items-center justify-center"
+          :class="color(n.type)"
+        >
           {{ Math.round(n.amount * 10) / 10 }}
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-            class="inline-block h-8 w-8 stroke-current">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            class="inline-block h-8 w-8 stroke-current"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            ></path>
           </svg>
         </div>
       </div>
@@ -71,14 +82,26 @@ function color(type: string) {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="ingredient in ingredients" :key="ingredient.Livsmedelsnamn" class="hover:bg-base-300">
+          <tr
+            v-for="ingredient in ingredients"
+            :key="ingredient.Livsmedelsnamn"
+            class="hover:bg-base-300"
+          >
             <td>{{ ingredient.Livsmedelsnamn }}</td>
             <td>
-              <input type="number" v-model="ingredient.weight" class="input input-xs w-16" placeholder="Gram (g)" />
+              <input
+                type="number"
+                v-model="ingredient.weight"
+                class="input input-xs w-16"
+                placeholder="Gram (g)"
+              />
             </td>
             <td>
               <div class="tooltip" data-tip="Ta bort">
-                <button class="btn btn-xs btn-error btn-ghost btn-circle" @click="emit('remove', ingredient)">
+                <button
+                  class="btn btn-xs btn-error btn-ghost btn-circle"
+                  @click="emit('remove', ingredient)"
+                >
                   X
                 </button>
               </div>
