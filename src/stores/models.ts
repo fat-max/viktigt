@@ -1,3 +1,7 @@
+export enum Actions {
+  RECIPES = 'recipes',
+}
+
 export interface Ingredient {
   Livsmedelsnamn: string
   Livsmedelsnummer: Number

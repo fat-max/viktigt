@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRecipesStore } from '@/stores/recipes'
 import { useEditStore } from '@/stores/edit'
 import { v4 as uuidv4 } from 'uuid'
+import TagInput from './common/TagInput.vue'
 
 const { updateRecipes } = useRecipesStore()
 const { recipe, reset } = useEditStore()
@@ -34,7 +35,8 @@ function save() {
     <input type="text" class="input w-full" placeholder="Flygande jacob" v-model="name" />
 
     <label class="label">Taggar</label>
-    <input type="text " class="input w-full" placeholder="Lunch, LCHF" v-model="tags" />
+    <!-- <input type="text " class="input w-full" placeholder="Lunch, LCHF" v-model="tags" /> -->
+    <TagInput v-model="tags" />
 
     <button class="btn btn-neutral mt-4" @click="save">Spara</button>
   </fieldset>

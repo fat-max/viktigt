@@ -1,6 +1,6 @@
 <template>
   <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-  <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 512 512" fill="currentColor" class="size-6">
+  <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 512 512" fill="currentColor">
     <path fill="#f4f6f9" d="M47 460h422v37H47z" />
     <path fill="#e5e8ec" d="M459 480q0 10 10 11v-22q-10 1-10 11" />
     <path fill="#ec5564"

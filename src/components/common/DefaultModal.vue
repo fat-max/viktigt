@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue'
 
+type Size = 'sm' | 'md' | 'lg'
+
 interface ModalProps {
   closeBtn?: boolean
   closeOutside?: boolean
   title?: string | null
+  size?: Size
 }
 
 const { closeBtn = false, closeOutside = true, title = null } = defineProps<ModalProps>()
@@ -18,7 +21,7 @@ defineExpose({
 
 <template>
   <dialog id="default_modal" ref="modal-ref" class="modal modal-bottom sm:modal-middle">
-    <div class="modal-box">
+    <div class="modal-box max-w-full">
       <form method="dialog" v-if="closeBtn">
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
       </form>

@@ -1,13 +1,27 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useRecipesStore } from '@/stores/recipes'
 import { nutrientsCalculator } from '@/helpers/recipe-helper'
+import { IconFilter } from './icons'
 
 const { recipes } = useRecipesStore()
 const nutrients = nutrientsCalculator([])
+const props = defineProps<{
+  onClick?: () => {}
+}>()
+
+const filter = ref<string>(null)
+const inputRef = ref(null)
+const tagify = ref(null)
+
 </script>
 
 <template>
   <div class="overflow-x-auto">
+    <label class="input float-right">
+      <IconFilter class="h-[1em] opacity-50" />
+      <input type="search" ref="inputRef" class="grow" placeholder="Filtrera på tag" v-model="filter" />
+    </label>
     <table class="table table-sm">
       <thead>
         <tr>
@@ -17,7 +31,8 @@ const nutrients = nutrientsCalculator([])
         </tr>
       </thead>
       <tbody>
-        <tr v-for="recipe in recipes" :key="recipe.name" class="hover:bg-base-300">
+        <tr v-for="recipe in recipes" :key="recipe.name" class="hover:bg-base-300 cursor-pointer"
+          @click="props.onClick?.(recipe)">
           <td>{{ recipe.name }}</td>
           <td>{{ recipe.portions }}</td>
           <td v-for="type in nutrientsCalculator(recipe.ingredients)">{{ type.amount }}</td>

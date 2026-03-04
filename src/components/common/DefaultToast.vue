@@ -24,21 +24,23 @@ const typeClass = computed(() => {
   }
 })
 
-watch(() => message, () => {
-  fadeOut.value = ''
+watch(
+  () => message,
+  () => {
+    fadeOut.value = ''
 
-  setTimeout(() => {
-    console.log('slide')
-    fadeOut.value = '-translate-y-[100px] sm:translate-y-[100px]'
-  }, 2000)
-})
+    setTimeout(() => {
+      fadeOut.value = 'translate-y-[100px]'
+    }, 2000)
+  },
+)
 
 const fade = computed(() => fadeOut.value)
 </script>
 
 <template>
   <div class="toast toast-center">
-    <div class="alert transition duration-1500 ease-in-out" :class="`${typeClass} ${fade}`">
+    <div class="alert transition duration-2500 ease-in-out" :class="`${typeClass} ${fade}`">
       <span>
         {{ message }}
       </span>

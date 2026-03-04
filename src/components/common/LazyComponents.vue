@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { defineAsyncComponent, computed, ref } from 'vue'
+import { defineAsyncComponent, computed } from 'vue'
 
 export type Component = 'DishForm' | 'RecipesList'
 
 const props = defineProps<{
-  component: Component,
-  passToProps?: Object
+  component: Component
+  propsToPass?: Object
+  emitsToPass?: Object
 }>()
 
 const asyncComponents = {
@@ -13,10 +14,9 @@ const asyncComponents = {
   RecipesList: defineAsyncComponent(() => import('@/components/RecipesList.vue')),
 }
 
-const componentToRender = ref<keyof typeof asyncComponents>(props.component)
-const currentComponent = computed(() => asyncComponents[componentToRender.value])
+const currentComponent = computed(() => asyncComponents[props.component])
 </script>
 
 <template>
-  <component :is="currentComponent" v-bind="passToProps" />
+  <component :is="currentComponent" v-bind="propsToPass" v-on="emitsToPass" />
 </template>

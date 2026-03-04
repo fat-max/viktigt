@@ -8,9 +8,9 @@ export const useRecipesStore = defineStore('recipes', () => {
   function updateRecipes(recipe: Recipe) {
     if (!recipe) return
 
-    const index = recipes.value.findIndex(x => x.id == recipe.id)
+    const index = recipes.value.findIndex((x) => x.id == recipe.id)
 
-    index < 0 ? recipes.value.push(recipe) : recipes.value[index] = recipe
+    index < 0 ? recipes.value.push(recipe) : (recipes.value[index] = recipe)
   }
 
   return { recipes, updateRecipes }

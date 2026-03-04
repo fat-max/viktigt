@@ -15,6 +15,14 @@ export const useEditStore = defineStore('edit', () => {
     recipe.value.ingredients.push({ ...ingredient, ...{ weight: settings.weight } })
   }
 
+  function removeIngredient(ingredient: Ingredient) {
+    const index = recipe.value.ingredients.findIndex((l) => l.Livsmedelsnummer == ingredient.Livsmedelsnummer)
+    if (index < 0)
+      return
+
+    recipe.value.ingredients.splice(index, 1)
+  }
+
   function setRecipe(update: Recipe) {
     recipe.value = update
   }
@@ -25,5 +33,5 @@ export const useEditStore = defineStore('edit', () => {
 
   const ingredients = computed(() => recipe.value.ingredients)
 
-  return { recipe, ingredients, addIngredient, setRecipe, reset }
+  return { recipe, ingredients, addIngredient, removeIngredient, setRecipe, reset }
 })
