@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, useTemplateRef, shallowRef } from 'vue'
+import { ref, useTemplateRef, shallowRef, defineAsyncComponent } from 'vue'
 import FoodSearch from './components/IngredientSearch.vue'
 import FabMenu from './components/FabMenu.vue'
 import DishSummary from './components/DishSummary.vue'
@@ -8,14 +8,27 @@ import DefaultModal from './components/default/DefaultModal.vue'
 import DefaultToast from './components/default/DefaultToast.vue'
 import DishForm from './components/DishForm.vue'
 
+const RecipesList = defineAsyncComponent(() => import('./components/RecipesList.vue'))
+
 const { ingredients, addIngredient, reset } = useEditStore()
 const modal = useTemplateRef('modal')
 const modalTitle = ref<string | null>(null)
 const component = shallowRef(DishForm)
 
+function fabHandler(action: string) {
+  openModal(action, RecipesList)
+}
+
 const save = () => {
-  modalTitle.value = null
-  component.value = DishForm
+  // modalTitle.value = null
+  // component.value = DishForm
+  // modal.value?.ref?.showModal()
+  openModal(null, DishForm)
+}
+
+function openModal(title, comp) {
+  modalTitle.value = title
+  component.value = comp
   modal.value?.ref?.showModal()
 }
 </script>
@@ -37,5 +50,5 @@ const save = () => {
 
     <DefaultToast :type="'success'">asdsasd asdsasd asdsasd</DefaultToast>
   </main>
-  <FabMenu />
+  <FabMenu @action="fabHandler" />
 </template>

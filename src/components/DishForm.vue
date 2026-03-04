@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { useRecipesStore } from '@/stores/recipes'
 import { useEditStore } from '@/stores/edit'
-import type { Recipe } from '@/stores/models'
 
 const { addRecipe } = useRecipesStore()
 const { ingredients, reset } = useEditStore()

@@ -1,23 +1,28 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { useSettingsStore } from './settings'
-import type { Ingredient } from './models'
+import type { Recipe, Ingredient } from './models'
 
 export const useEditStore = defineStore('edit', () => {
-  const list = ref<Ingredient[]>([])
   const { settings } = useSettingsStore()
+  const defaultRecipe = {name: '', portions: settings.portions, ingredients: []}
+  const recipeRef = ref<Recipe>(defaultRecipe)
 
   function addIngredient(ingredient: Ingredient) {
-    if (list.value.some((l) => l.Livsmedelsnummer == ingredient.Livsmedelsnummer)) return
+    if (recipeRef.value.ingredients.some((l) => l.Livsmedelsnummer == ingredient.Livsmedelsnummer)) return
 
-    list.value.push({ ...ingredient, ...{ weight: settings.weight } })
+    recipeRef.value.ingredients.push({ ...ingredient, ...{ weight: settings.weight } })
+  }
+
+  function setRecipe(recipe: Recipe) {
+    recipeRef.value = recipe
   }
 
   const reset = () => {
-    list.value = []
+    recipeRef.value = defaultRecipe
   }
 
-  const ingredients = computed(() => list.value)
+  const ingredients = computed(() => recipeRef.value.ingredients)
 
-  return { ingredients, addIngredient, reset }
+  return { ingredients, addIngredient, setRecipe, reset }
 })

@@ -1,7 +1,7 @@
 export interface Ingredient {
   Livsmedelsnamn: string
   Livsmedelsnummer: Number
-  weight?: Number
+  weight: Number
 }
 
 export interface Recipe {
