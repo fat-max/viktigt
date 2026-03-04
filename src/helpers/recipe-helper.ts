@@ -1,4 +1,4 @@
-import type { Ingredient } from "@/stores/models"
+import type { Ingredient } from '@/stores/models'
 
 export function nutrientsCalculator(ingredients: Ingredient[]) {
   const nutrients = [
@@ -8,10 +8,10 @@ export function nutrientsCalculator(ingredients: Ingredient[]) {
     { type: 'carbs', label: 'Kolhydrater (g)', amount: 0 },
   ]
 
-  ingredients.forEach((ingredient) => {
+  ingredients.forEach((ingredient: Ingredient) => {
     if (!ingredient.weight) return
 
-    const amount = ingredient.weight / 100
+    const amount = parseInt(`${ingredient?.weight ?? 0}`) / 100
     // @ts-ignore
     nutrients[0].amount += ingredient['Energi (kcal)'] * amount
     // @ts-ignore

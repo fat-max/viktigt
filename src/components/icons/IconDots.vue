@@ -1,7 +1,14 @@
 <template>
   <!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
-  <svg aria-label="Menu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512" fill="currentColor" class="size-6">
+  <svg
+    aria-label="Menu"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 128 512"
+    fill="currentColor"
+    class="size-6"
+  >
     <path
-      d="M64 144a56 56 0 1 1 0-112 56 56 0 1 1 0 112zm0 224c30.9 0 56 25.1 56 56s-25.1 56-56 56-56-25.1-56-56 25.1-56 56-56zm56-112c0 30.9-25.1 56-56 56s-56-25.1-56-56 25.1-56 56-56 56 25.1 56 56z" />
+      d="M64 144a56 56 0 1 1 0-112 56 56 0 1 1 0 112zm0 224c30.9 0 56 25.1 56 56s-25.1 56-56 56-56-25.1-56-56 25.1-56 56-56zm56-112c0 30.9-25.1 56-56 56s-56-25.1-56-56 25.1-56 56-56 56 25.1 56 56z"
+    />
   </svg>
 </template>

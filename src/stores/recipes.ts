@@ -5,10 +5,13 @@ import type { Recipe } from './models'
 export const useRecipesStore = defineStore('recipes', () => {
   const recipes = useLocalStorage<Recipe[]>('recipes', [])
 
-  function addRecipe(recipe: Recipe) {
+  function updateRecipes(recipe: Recipe) {
     if (!recipe) return
-    recipes.value.push(recipe)
+
+    const index = recipes.value.findIndex(x => x.id == recipe.id)
+
+    index < 0 ? recipes.value.push(recipe) : recipes.value[index] = recipe
   }
 
-  return { recipes, addRecipe }
+  return { recipes, updateRecipes }
 })

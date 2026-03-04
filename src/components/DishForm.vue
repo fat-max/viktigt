@@ -2,29 +2,29 @@
 import { ref } from 'vue'
 import { useRecipesStore } from '@/stores/recipes'
 import { useEditStore } from '@/stores/edit'
+import { v4 as uuidv4 } from 'uuid'
 
-const { addRecipe } = useRecipesStore()
-const { ingredients, reset } = useEditStore()
+const { updateRecipes } = useRecipesStore()
+const { recipe, reset } = useEditStore()
 
-const emit = defineEmits(['saved'])
-
-const name = ref<string | null>(null)
-const tags = ref<string | null>(null)
+const emit = defineEmits(['dishSaved'])
+const name = ref<string>(recipe.name)
+const tags = ref<string | null>(recipe?.tags?.join(',') ?? null)
 
 // @todo: real validate
 function save() {
   if (!name.value) return
 
-  const recipe = {
+  updateRecipes({
+    id: recipe.id ?? uuidv4(),
     name: name.value,
     tags: tags.value?.toLowerCase()?.split(/[\s,]+/),
-    ingredients: ingredients,
+    ingredients: recipe.ingredients,
     portions: 1,
-  }
+  })
 
-  addRecipe(recipe)
   reset()
-  emit('saved', name.value)
+  emit('dishSaved', name.value)
 }
 </script>
 

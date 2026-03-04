@@ -1,22 +1,46 @@
 <script setup lang="ts">
-import { computed, useTemplateRef } from 'vue'
+import { computed, ref, watch } from 'vue'
 
-type Type = 'info' | 'success' | 'error' | 'warning' | 'default'
+export type ToastType = 'info' | 'success' | 'error' | 'warning' | 'default' | null
 
 interface Props {
-  type?: Type
+  message: String
+  type?: ToastType
 }
 
-const { type = 'default' } = defineProps<Props>()
+const { message, type = 'default' } = defineProps<Props>()
+const fadeOut = ref('')
 
-const cls = computed(() => `alert-${type}`)
+const typeClass = computed(() => {
+  switch (type) {
+    case 'info':
+      return 'alert-info'
+    case 'success':
+      return 'alert-success'
+    case 'error':
+      return 'alert-error'
+    case 'warning':
+      return 'alert-warning'
+  }
+})
+
+watch(() => message, () => {
+  fadeOut.value = ''
+
+  setTimeout(() => {
+    console.log('slide')
+    fadeOut.value = '-translate-y-[100px] sm:translate-y-[100px]'
+  }, 2000)
+})
+
+const fade = computed(() => fadeOut.value)
 </script>
 
 <template>
   <div class="toast toast-center">
-    <div class="alert" :class="cls">
+    <div class="alert transition duration-1500 ease-in-out" :class="`${typeClass} ${fade}`">
       <span>
-        <slot></slot>
+        {{ message }}
       </span>
     </div>
   </div>

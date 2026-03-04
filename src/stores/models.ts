@@ -5,6 +5,7 @@ export interface Ingredient {
 }
 
 export interface Recipe {
+  id?: string
   name: string
   portions: Number
   tags?: string[]

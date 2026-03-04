@@ -5,50 +5,58 @@ import FabMenu from './components/FabMenu.vue'
 import DishSummary from './components/DishSummary.vue'
 import { useEditStore } from './stores/edit'
 import DefaultModal from './components/default/DefaultModal.vue'
-import DefaultToast from './components/default/DefaultToast.vue'
-import DishForm from './components/DishForm.vue'
-
-const RecipesList = defineAsyncComponent(() => import('./components/RecipesList.vue'))
+import DefaultToast, { type ToastType } from './components/default/DefaultToast.vue'
+import LazyComponents, { type Component } from './components/default/LazyComponents.vue'
 
 const { ingredients, addIngredient, reset } = useEditStore()
 const modal = useTemplateRef('modal')
 const modalTitle = ref<string | null>(null)
-const component = shallowRef(DishForm)
+const toastMessage = ref<string>('')
+const toastType = ref<ToastType>(null)
+const component = ref<Component | null>(null)
+const propsToPass = ref<Object>({})
 
 function fabHandler(action: string) {
-  openModal(action, RecipesList)
+  switch (action) {
+    case 'recioes':
+      openModal('RecipesList', 'Mina recept')
+      break
+  }
 }
 
-const save = () => {
-  // modalTitle.value = null
-  // component.value = DishForm
-  // modal.value?.ref?.showModal()
-  openModal(null, DishForm)
+function save() {
+  openModal('DishForm')
 }
 
-function openModal(title, comp) {
+function openModal(comp: Component, title: string | null = null, props: Object = {}) {
   modalTitle.value = title
   component.value = comp
+  propsToPass.value = props
   modal.value?.ref?.showModal()
+}
+
+function toast(message: string, type = null) {
+  toastMessage.value = message
+  toastType.value = type
 }
 </script>
 
 <template>
   <header>
     <h1 class="text-4xl font-extrabold pb-2 text-center sm:text-6xl sm:pb-3 text-secondary">
-      viktigt
+      viktigare
     </h1>
     <FoodSearch @selected="addIngredient" />
   </header>
 
   <main>
-    <DishSummary :ingredients="ingredients" :reset="reset" :save="save" />
+    <DishSummary v-if="ingredients" :ingredients="ingredients" :reset="reset" :save="save" />
 
     <DefaultModal ref="modal" :title="modalTitle">
-      <component :is="component"></component>
+      <LazyComponents v-if="component" :component="component" :pass-to-props="propsToPass" />
     </DefaultModal>
-
-    <DefaultToast :type="'success'">asdsasd asdsasd asdsasd</DefaultToast>
   </main>
+
   <FabMenu @action="fabHandler" />
+  <DefaultToast :type="toastType" :message="toastMessage" />
 </template>

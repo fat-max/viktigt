@@ -5,24 +5,25 @@ import type { Recipe, Ingredient } from './models'
 
 export const useEditStore = defineStore('edit', () => {
   const { settings } = useSettingsStore()
-  const defaultRecipe = {name: '', portions: settings.portions, ingredients: []}
-  const recipeRef = ref<Recipe>(defaultRecipe)
+  const defaultRecipe = { name: '', portions: settings.portions, ingredients: [] }
+  const recipe = ref<Recipe>(defaultRecipe)
 
   function addIngredient(ingredient: Ingredient) {
-    if (recipeRef.value.ingredients.some((l) => l.Livsmedelsnummer == ingredient.Livsmedelsnummer)) return
+    if (recipe.value.ingredients.some((l) => l.Livsmedelsnummer == ingredient.Livsmedelsnummer))
+      return
 
-    recipeRef.value.ingredients.push({ ...ingredient, ...{ weight: settings.weight } })
+    recipe.value.ingredients.push({ ...ingredient, ...{ weight: settings.weight } })
   }
 
-  function setRecipe(recipe: Recipe) {
-    recipeRef.value = recipe
+  function setRecipe(update: Recipe) {
+    recipe.value = update
   }
 
   const reset = () => {
-    recipeRef.value = defaultRecipe
+    recipe.value = defaultRecipe
   }
 
-  const ingredients = computed(() => recipeRef.value.ingredients)
+  const ingredients = computed(() => recipe.value.ingredients)
 
-  return { ingredients, addIngredient, setRecipe, reset }
+  return { recipe, ingredients, addIngredient, setRecipe, reset }
 })

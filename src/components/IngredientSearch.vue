@@ -7,7 +7,9 @@ const nutrients = ref<Ingredient[]>([])
 const emit = defineEmits(['selected'])
 const state = reactive<{ search: string }>({ search: '' })
 
-import('@/data/nutrients.json').then((data) => (nutrients.value = data.default))
+import('@/data/nutrients.json').then(data => nutrients.value = data.default.map(nutrient => (
+  { ...nutrient, ...{ weight: 100 } }
+)))
 
 const filtered = computed(() =>
   state.search.length < 3 || !nutrients.value
