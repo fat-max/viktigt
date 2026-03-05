@@ -22,7 +22,7 @@ export function nutrientsCalculator(ingredients: Ingredient[]) {
     nutrients[3].amount += ingredient['Kolhydrater, tillgängliga (g)'] * amount
   })
 
-  return nutrients.map(n => {
+  return nutrients.map((n) => {
     n.amount = Math.round(n.amount * 10) / 10
     return n
   })

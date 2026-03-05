@@ -16,9 +16,10 @@ export const useEditStore = defineStore('edit', () => {
   }
 
   function removeIngredient(ingredient: Ingredient) {
-    const index = recipe.value.ingredients.findIndex((l) => l.Livsmedelsnummer == ingredient.Livsmedelsnummer)
-    if (index < 0)
-      return
+    const index = recipe.value.ingredients.findIndex(
+      (l) => l.Livsmedelsnummer == ingredient.Livsmedelsnummer,
+    )
+    if (index < 0) return
 
     recipe.value.ingredients.splice(index, 1)
   }

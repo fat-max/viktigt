@@ -14,9 +14,9 @@ interface Props {
   reset?: () => void
 }
 
-const { save = () => { }, reset = () => { } } = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), { save: () => { }, reset: () => { } })
 
-const nutrients = computed(() => nutrientsCalculator(ingredients))
+const nutrients = computed(() => nutrientsCalculator(ingredients.value))
 
 function color(type: string) {
   if (type == 'energy') return 'text-warning'
@@ -70,8 +70,8 @@ function color(type: string) {
     </div>
 
     <div class="flex justify-end gap-2 my-4">
-      <button class="btn btn-xs btn-error" @click="reset">Släng</button>
-      <button class="btn btn-xs btn-primary" @click="save">Spara</button>
+      <button class="btn btn-xs btn-error" @click="props.reset">Släng</button>
+      <button class="btn btn-xs btn-primary" @click="props.save">Spara</button>
     </div>
   </div>
 </template>

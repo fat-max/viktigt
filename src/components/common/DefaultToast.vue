@@ -8,11 +8,13 @@ interface Props {
   type?: ToastType
 }
 
-const { message, type = 'default' } = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  type: 'default'
+})
 const fadeOut = ref('')
 
 const typeClass = computed(() => {
-  switch (type) {
+  switch (props.type) {
     case 'info':
       return 'alert-info'
     case 'success':
@@ -25,7 +27,7 @@ const typeClass = computed(() => {
 })
 
 watch(
-  () => message,
+  () => props.message,
   () => {
     fadeOut.value = ''
 
@@ -42,7 +44,7 @@ const fade = computed(() => fadeOut.value)
   <div class="toast toast-center">
     <div class="alert transition duration-2500 ease-in-out" :class="`${typeClass} ${fade}`">
       <span>
-        {{ message }}
+        {{ props.message }}
       </span>
     </div>
   </div>

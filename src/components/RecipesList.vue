@@ -3,17 +3,17 @@ import { ref } from 'vue'
 import { useRecipesStore } from '@/stores/recipes'
 import { nutrientsCalculator } from '@/helpers/recipe-helper'
 import { IconFilter } from './icons'
+import type { Recipe } from '@/stores/models'
 
 const { recipes } = useRecipesStore()
 const nutrients = nutrientsCalculator([])
 const props = defineProps<{
-  onClick?: () => {}
+  onClick?: (recipe: Recipe) => {}
 }>()
 
-const filter = ref<string>(null)
+const filter = ref<string | null>(null)
 const inputRef = ref(null)
 const tagify = ref(null)
-
 </script>
 
 <template>

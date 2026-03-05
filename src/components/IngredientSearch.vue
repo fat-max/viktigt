@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import type { Ingredient } from '@/stores/models'
 import { IconSearch } from './icons'
+// import VueSelect from 'vue3-select-component'
+// import 'vue3-select-component/styles'
 
 const nutrients = ref<Ingredient[]>([])
 const emit = defineEmits(['selected'])
@@ -24,12 +26,26 @@ function select(ingredient: Ingredient) {
   emit('selected', ingredient)
   state.search = ''
 }
+// watch(state, () => {
+//   if (!state.search) return
+//   console.log(state.search)
+//   // emit('selected', state.search)
+//   // state.search = ''
+// })
 </script>
 
 <template>
   <div class="relative">
     <label class="input w-full">
       <IconSearch class="h-[1em] opacity-50" />
+      <!-- <VueSelect v-model="state.search" :options="nutrients" :getOptionLabel="(option) => option.Livsmedelsnamn"
+        :getOptionValue="(option) => option" placeholder="Select an option" :classes="{
+          control: 'bg-base-100! border-none! placeholder',
+          placeholder: 'text-base-content/40!',
+          singleValue: 'text-base-content!',
+          menuContainer: 'bg-base-100! border-none!',
+          menuOption: 'text-base-content! p-1! rounded! hover:bg-accent-content!',
+        }" /> -->
       <input type="search" class="grow" placeholder="Sök livsmedel..." v-model="state.search" />
     </label>
 
@@ -42,3 +58,5 @@ function select(ingredient: Ingredient) {
     </div>
   </div>
 </template>
+
+<style></style>

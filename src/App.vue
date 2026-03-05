@@ -7,7 +7,7 @@ import DishSummary from './components/DishSummary.vue'
 import DefaultModal from './components/common/DefaultModal.vue'
 import DefaultToast, { type ToastType } from './components/common/DefaultToast.vue'
 import LazyComponents, { type Component } from './components/common/LazyComponents.vue'
-import { Actions } from './stores/models'
+import { Actions, type Recipe } from './stores/models'
 
 const { addIngredient, reset, setRecipe } = useEditStore()
 const modal = useTemplateRef('modal')
@@ -29,25 +29,35 @@ function fabHandler(action: string) {
   switch (action) {
     case Actions.RECIPES:
       openModal('RecipesList', 'Mina recept', {
-        onClick: (recipe) => {
+        onClick: (recipe: Recipe) => {
           setRecipe(recipe)
           modal.value?.ref?.close()
-        }
+        },
       })
       break
   }
 }
 
 function save() {
-  openModal('DishForm', null, {}, {
-    dishSaved: (name) => {
-      modal.value?.ref?.close()
-      toast(`Receptet "${name}" sparat`, 'success')
-    }
-  })
+  openModal(
+    'DishForm',
+    null,
+    {},
+    {
+      dishSaved: (name: string) => {
+        modal.value?.ref?.close()
+        toast(`Receptet "${name}" sparat`, 'success')
+      },
+    },
+  )
 }
 
-const openModal = (comp: Component, title: string | null = null, props: Object = {}, emits: Object = {}) => {
+const openModal = (
+  comp: Component,
+  title: string | null = null,
+  props: Object = {},
+  emits: Object = {},
+) => {
   modalData.title = title
   modalData.component = comp
   modalData.props = props
@@ -56,7 +66,7 @@ const openModal = (comp: Component, title: string | null = null, props: Object =
   modal.value?.ref?.showModal()
 }
 
-function toast(message: string, type = null) {
+function toast(message: string, type: ToastType = null) {
   toastMessage.value = message
   toastType.value = type
 }

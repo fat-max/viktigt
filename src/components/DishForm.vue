@@ -3,14 +3,14 @@ import { ref } from 'vue'
 import { useRecipesStore } from '@/stores/recipes'
 import { useEditStore } from '@/stores/edit'
 import { v4 as uuidv4 } from 'uuid'
-import TagInput from './common/TagInput.vue'
+// import TagInput from './common/TagInput.vue'
 
 const { updateRecipes } = useRecipesStore()
 const { recipe, reset } = useEditStore()
 
 const emit = defineEmits(['dishSaved'])
 const name = ref<string>(recipe.name)
-const tags = ref<string | null>(recipe?.tags?.join(',') ?? null)
+const tags = ref<string[]>(recipe?.tags ?? [])
 
 // @todo: real validate
 function save() {
@@ -19,7 +19,7 @@ function save() {
   updateRecipes({
     id: recipe.id ?? uuidv4(),
     name: name.value,
-    tags: tags.value?.toLowerCase()?.split(/[\s,]+/),
+    tags: tags.value,
     ingredients: recipe.ingredients,
     portions: 1,
   })
@@ -35,8 +35,7 @@ function save() {
     <input type="text" class="input w-full" placeholder="Flygande jacob" v-model="name" />
 
     <label class="label">Taggar</label>
-    <!-- <input type="text " class="input w-full" placeholder="Lunch, LCHF" v-model="tags" /> -->
-    <TagInput v-model="tags" />
+    <input type="text " class="input w-full" placeholder="Lunch, LCHF" v-model="tags" />
 
     <button class="btn btn-neutral mt-4" @click="save">Spara</button>
   </fieldset>
