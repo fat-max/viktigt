@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<ModalProps>(), {
   closeBtn: false,
   closeOutside: true,
   title: null,
-  size: 'md'
+  size: 'md',
 })
 
 const ref = useTemplateRef('modal-ref')

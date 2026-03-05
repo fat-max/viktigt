@@ -23,7 +23,7 @@ export default defineConfig({
         name: 'Viktigare',
         short_name: 'Viktigt',
         description: 'App för snabb summering av näringsinehåll. Spara dina recept lokalt.',
-        theme_color: '#ffffff',
+        theme_color: '#1c2229',
         icons: [
           {
             src: "pwa-64x64.png",
