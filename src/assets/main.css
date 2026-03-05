@@ -42,22 +42,22 @@
 }
 
 /* category colors */
-.tagify__tag[data-type="frukost"] {
+.tagify__tag[data-type='frukost'] {
   @apply badge-success;
 }
 
-.tagify__tag[data-type="lunch"] {
+.tagify__tag[data-type='lunch'] {
   @apply badge-info;
 }
 
-.tagify__tag[data-type="mellanmål"] {
+.tagify__tag[data-type='mellanmål'] {
   @apply badge-secondary;
 }
 
-.tagify__tag[data-type="middag"] {
+.tagify__tag[data-type='middag'] {
   @apply badge-primary;
 }
 
-.tagify__tag[data-type="kvällsmat"] {
+.tagify__tag[data-type='kvällsmat'] {
   @apply badge-accent;
 }

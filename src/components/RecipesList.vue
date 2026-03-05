@@ -17,27 +17,39 @@ const tagify = ref(null)
 </script>
 
 <template>
-  <div class="overflow-x-auto">
-    <label class="input float-right">
-      <IconFilter class="h-[1em] opacity-50" />
-      <input type="search" ref="inputRef" class="grow" placeholder="Filtrera på tag" v-model="filter" />
+  <div class="flex flex-col items-end">
+    <label class="input input-sm w-48">
+      <IconFilter class="h-[1.5em] opacity-50" />
+      <input
+        type="search"
+        ref="inputRef"
+        class="grow"
+        placeholder="Filtrera på tag"
+        v-model="filter"
+      />
     </label>
-    <table class="table table-sm">
-      <thead>
-        <tr>
-          <th>Namn</th>
-          <th>Portioner</th>
-          <th v-for="nutrient in nutrients" :key="nutrient.type">{{ nutrient.label }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="recipe in recipes" :key="recipe.name" class="hover:bg-base-300 cursor-pointer"
-          @click="props.onClick?.(recipe)">
-          <td>{{ recipe.name }}</td>
-          <td>{{ recipe.portions }}</td>
-          <td v-for="type in nutrientsCalculator(recipe.ingredients)">{{ type.amount }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="overflow-x-auto w-full">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Namn</th>
+            <th>Portioner</th>
+            <th v-for="nutrient in nutrients" :key="nutrient.type">{{ nutrient.label }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="recipe in recipes"
+            :key="recipe.name"
+            class="hover:bg-base-300 cursor-pointer"
+            @click="props.onClick?.(recipe)"
+          >
+            <td>{{ recipe.name }}</td>
+            <td>{{ recipe.portions }}</td>
+            <td v-for="type in nutrientsCalculator(recipe.ingredients)">{{ type.amount }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>

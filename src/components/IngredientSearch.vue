@@ -18,8 +18,8 @@ const filtered = computed(() =>
   state.search.length < 3 || !nutrients.value
     ? []
     : nutrients.value.filter((f: Ingredient) =>
-      f.Livsmedelsnamn.toLowerCase().includes(state.search.toLowerCase()),
-    ),
+        f.Livsmedelsnamn.toLowerCase().includes(state.search.toLowerCase()),
+      ),
 )
 
 function select(ingredient: Ingredient) {

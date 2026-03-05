@@ -10,7 +10,11 @@ interface ModalProps {
   size?: Size
 }
 
-const props = withDefaults(defineProps<ModalProps>(), { closeBtn: false, closeOutside: true, title: null })
+const props = withDefaults(defineProps<ModalProps>(), {
+  closeBtn: false,
+  closeOutside: true,
+  title: null,
+})
 
 const ref = useTemplateRef('modal-ref')
 

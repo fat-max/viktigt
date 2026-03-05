@@ -6,7 +6,7 @@ const emit = defineEmits(['action'])
 
 <template>
   <div class="fab">
-    <div tabindex="0" role="button" class="btn btn-circle btn-lg btn-secondary">
+    <div tabindex="0" role="button" class="btn btn-circle btn-lg btn-accent">
       <IconDots class="size-6" />
     </div>
 

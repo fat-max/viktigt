@@ -9,7 +9,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  type: 'default'
+  type: 'default',
 })
 const fadeOut = ref('')
 
