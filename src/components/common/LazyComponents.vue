@@ -13,10 +13,10 @@ const asyncComponents = {
   DishForm: defineAsyncComponent(() => import('@/components/DishForm.vue')),
   RecipesList: defineAsyncComponent(() => import('@/components/RecipesList.vue')),
 }
-
 const currentComponent = computed(() => asyncComponents[props.component])
 </script>
 
 <template>
+  <!-- {{ propsToPass }} -->
   <component :is="currentComponent" v-bind="propsToPass" v-on="emitsToPass" />
 </template>

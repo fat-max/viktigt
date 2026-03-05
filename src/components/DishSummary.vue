@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { nutrientsCalculator } from '@/helpers/recipe-helper'
 import { useEditStore } from '@/stores/edit'
@@ -14,9 +14,13 @@ interface Props {
   reset?: () => void
 }
 
-const props = withDefaults(defineProps<Props>(), { save: () => {}, reset: () => {} })
+const props = withDefaults(defineProps<Props>(), { save: () => { }, reset: () => { } })
 
 const nutrients = computed(() => nutrientsCalculator(ingredients.value))
+
+// watch(recipe, () => {
+//   console.log(recipe.value)
+// })
 
 function color(type: string) {
   if (type == 'energy') return 'text-warning'
@@ -32,29 +36,17 @@ function color(type: string) {
     <div class="grid grid-cols-4 gap-2 my-4">
       <div v-for="n in nutrients" :key="n.type" class="flex flex-col gap-2 cursor-default">
         <div class="stat-title">{{ n.label }}</div>
-        <div
-          class="flex gap-2 w-full font-extrabold text-3xl items-center justify-center"
-          :class="color(n.type)"
-        >
+        <div class="flex gap-2 w-full font-extrabold text-3xl items-center justify-center" :class="color(n.type)">
           {{ n.amount }}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            class="inline-block h-8 w-8 stroke-current"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 10V3L4 14h7v7l9-11h-7z"
-            ></path>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            class="inline-block h-8 w-8 stroke-current">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
           </svg>
         </div>
       </div>
     </div>
 
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto" v-if="ingredients.length">
       <table class="table table-zebra table-sm">
         <thead>
           <tr>
@@ -64,26 +56,14 @@ function color(type: string) {
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="ingredient in ingredients"
-            :key="ingredient.Livsmedelsnamn"
-            class="hover:bg-base-300"
-          >
+          <tr v-for="ingredient in ingredients" :key="ingredient.Livsmedelsnamn" class="hover:bg-base-300">
             <td>{{ ingredient.Livsmedelsnamn }}</td>
             <td>
-              <input
-                type="number"
-                v-model="ingredient.weight"
-                class="input input-xs w-16"
-                placeholder="Gram (g)"
-              />
+              <input type="number" v-model="ingredient.weight" class="input input-xs w-16" placeholder="Gram (g)" />
             </td>
             <td>
               <div class="tooltip" data-tip="Ta bort">
-                <button
-                  class="btn btn-xs btn-error btn-ghost btn-circle"
-                  @click="removeIngredient(ingredient)"
-                >
+                <button class="btn btn-xs btn-error btn-ghost btn-circle" @click="removeIngredient(ingredient)">
                   X
                 </button>
               </div>
@@ -93,9 +73,9 @@ function color(type: string) {
       </table>
     </div>
 
-    <div class="flex justify-end gap-2 my-4">
-      <button class="btn btn-xs btn-error" @click="props.reset">Släng</button>
-      <button class="btn btn-xs btn-primary" @click="props.save">Spara</button>
+    <div class="flex justify-end gap-2 my-4" v-if="ingredients.length">
+      <button class="btn btn-xs btn-error" @click="props.reset">{{ recipe.id ? 'Ta bort recept' : 'Töm' }}</button>
+      <button class="btn btn-xs btn-primary" @click="props.save">{{ recipe.id ? 'Updatera' : 'Spara' }}</button>
     </div>
   </div>
 </template>

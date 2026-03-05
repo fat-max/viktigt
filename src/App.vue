@@ -31,6 +31,7 @@ function fabHandler(action: string) {
   switch (action) {
     case Actions.RECIPES:
       openModal('RecipesList', 'Mina recept', {
+        size: 'lg',
         onClick: (recipe: Recipe) => {
           setRecipe(recipe)
           modal.value?.ref?.close()
@@ -44,7 +45,7 @@ function save() {
   openModal(
     'DishForm',
     null,
-    {},
+    { size: 'md' },
     {
       dishSaved: (name: string) => {
         modal.value?.ref?.close()
@@ -60,6 +61,7 @@ const openModal = (
   props: Object = {},
   emits: Object = {},
 ) => {
+  // console.log(props)
   modalData.title = title
   modalData.component = comp
   modalData.props = props
@@ -100,11 +102,8 @@ function toast(message: string, type: ToastType = null) {
     <DishSummary :reset="reset" :save="save" />
 
     <DefaultModal ref="modal" :title="modalData.title">
-      <LazyComponents
-        :component="modalData.component"
-        :props-to-pass="modalData.props"
-        :emits-to-pass="modalData.emits"
-      />
+      <LazyComponents :component="modalData.component" :props-to-pass="modalData.props"
+        :emits-to-pass="modalData.emits" />
     </DefaultModal>
   </main>
 

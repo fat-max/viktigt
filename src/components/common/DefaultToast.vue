@@ -11,7 +11,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   type: 'default',
 })
-const fadeOut = ref('')
+const fadeOut = ref('translate-y-[100px]')
 
 const typeClass = computed(() => {
   switch (props.type) {
