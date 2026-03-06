@@ -2,6 +2,13 @@ export enum Actions {
   RECIPES = 'recipes',
 }
 
+export enum Nutrients {
+  ENERGY = 'energy',
+  PROTEIN = 'protein',
+  FAT = 'fat',
+  CARBOHYDRATES = 'carbohydrates',
+}
+
 export interface Ingredient {
   Livsmedelsnamn: string
   Livsmedelsnummer: Number

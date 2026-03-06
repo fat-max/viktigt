@@ -1,11 +1,12 @@
 import type { Ingredient } from '@/stores/models'
+import { Nutrients } from '@/stores/models'
 
 export function nutrientsCalculator(ingredients: Ingredient[]) {
   const nutrients = [
-    { type: 'energy', label: 'Energi (kcal)', amount: 0 },
-    { type: 'protein', label: 'Protein (g)', amount: 0 },
-    { type: 'fat', label: 'Fett (g)', amount: 0 },
-    { type: 'carbs', label: 'Kolhydrater (g)', amount: 0 },
+    { type: Nutrients.ENERGY, label: 'Energi (kcal)', amount: 0 },
+    { type: Nutrients.PROTEIN, label: 'Protein (g)', amount: 0 },
+    { type: Nutrients.FAT, label: 'Fett (g)', amount: 0 },
+    { type: Nutrients.CARBOHYDRATES, label: 'Kolhydrater (g)', amount: 0 },
   ]
 
   ingredients.forEach((ingredient: Ingredient) => {
