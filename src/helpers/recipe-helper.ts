@@ -1,7 +1,6 @@
-import type { Ingredient } from '@/stores/models'
-import { Nutrients } from '@/stores/models'
+import { Nutrients, type Recipe, type Ingredient } from '@/stores/models'
 
-export function nutrientsCalculator(ingredients: Ingredient[]) {
+export function nutrientsCalculator(recipe: Recipe | null, perPortion = false) {
   const nutrients = [
     { type: Nutrients.ENERGY, label: 'Energi (kcal)', amount: 0 },
     { type: Nutrients.PROTEIN, label: 'Protein (g)', amount: 0 },
@@ -9,7 +8,7 @@ export function nutrientsCalculator(ingredients: Ingredient[]) {
     { type: Nutrients.CARBOHYDRATES, label: 'Kolhydrater (g)', amount: 0 },
   ]
 
-  ingredients.forEach((ingredient: Ingredient) => {
+  recipe?.ingredients?.forEach((ingredient: Ingredient) => {
     if (!ingredient.weight) return
 
     const amount = parseInt(`${ingredient?.weight ?? 0}`) / 100
@@ -24,7 +23,8 @@ export function nutrientsCalculator(ingredients: Ingredient[]) {
   })
 
   return nutrients.map((n) => {
-    n.amount = Math.round(n.amount * 10) / 10
+    // @ts-ignore
+    n.amount = Math.round(n.amount / (perPortion ? recipe.portions : 1) * 10) / 10
     return n
   })
 }

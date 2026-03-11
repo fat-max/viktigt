@@ -7,6 +7,7 @@ import IconEnergy from './IconEnergy.vue'
 import IconFilter from './IconFilter.vue'
 import IconInfo from './IconInfo.vue'
 import IconMoon from './IconMoon.vue'
+import IconPreference from './IconPreference.vue'
 import IconProfile from './IconProfile.vue'
 import IconRecipes from './IconRecipes.vue'
 import IconSearch from './IconSearch.vue'
@@ -23,6 +24,7 @@ export {
   IconFilter,
   IconInfo,
   IconMoon,
+  IconPreference,
   IconProfile,
   IconRecipes,
   IconSearch,

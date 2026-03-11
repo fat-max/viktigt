@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconInfo, IconCogs, IconProfile, IconDots, IconRecipes } from './icons'
+import { IconPreference, IconDots, IconRecipes } from './icons'
 import { Actions } from '@/stores/models'
 const emit = defineEmits(['action'])
 </script>
@@ -21,23 +21,11 @@ const emit = defineEmits(['action'])
         <IconRecipes class="size-6" />
       </button>
     </div>
-    <!-- <div>
-      Profil
-      <button class="btn btn-circle btn-lg" @click="emit('action', 'profile')">
-        <IconProfile class="size-6" />
-      </button>
-    </div>
     <div>
       Inställningar
-      <button class="btn btn-circle btn-lg" @click="emit('action', 'settings')">
-        <IconCogs class="size-6" />
+      <button class="btn btn-circle btn-lg" @click="emit('action', Actions.PREFERENCE)">
+        <IconPreference class="size-6" />
       </button>
     </div>
-    <div>
-      Om
-      <button class="btn btn-circle btn-lg" @click="emit('action', 'info')">
-        <IconInfo class="size-6" />
-      </button>
-    </div> -->
   </div>
 </template>

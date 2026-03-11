@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTemplateRef, computed, watch } from 'vue'
 
-export type Size = 'sm' | 'md' | 'lg'
+export type Size = 'xs' | 'sm' | 'md' | 'lg'
 
 interface ModalProps {
   closeBtn?: boolean
@@ -21,7 +21,8 @@ const ref = useTemplateRef('modal-ref')
 
 const sizeClass = computed(() => {
   if (props.size == 'lg') return 'max-w-full'
-  if (props.size == 'sm') return 'max-w-96'
+  if (props.size == 'sm') return 'sm:max-w-96'
+  if (props.size == 'xs') return 'sm:max-w-72'
 
   return ''
 })

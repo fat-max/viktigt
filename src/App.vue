@@ -43,22 +43,26 @@ function fabHandler(action: string) {
         'lg',
       )
       break
+    case Actions.PREFERENCE:
+      openModal(
+        'PreferenceForm',
+        'Standardinställningar',
+        {
+          // onClick: (recipe: Recipe) => {
+          //   setRecipe(recipe)
+          //   modal.value?.ref?.close()
+          // },
+        },
+        {},
+        'xs',
+      )
+      break
   }
 }
 
-// function save() {
-//   openModal(
-//     'DishForm',
-//     null,
-//     {},
-//     {
-//       dishSaved: (name: string) => {
-//         modal.value?.ref?.close()
-//         toast(`Receptet "${name}" sparat`, 'success')
-//       },
-//     },
-//   )
-// }
+function save(name: string) {
+  toast(`Receptet "${name}" sparat`, 'success')
+}
 
 const openModal = (
   comp: Component,
@@ -83,10 +87,10 @@ function toast(message: string, type: ToastType = null) {
 </script>
 
 <template>
-  <label class="absolute right-4 top-4 toggle">
+  <label class="swap absolute right-4 top-4 h-6 w-6 text-base-content">
     <input type="checkbox" class="theme-controller" value="cupcake" />
-    <IconSun aria-label="enabled" />
-    <IconMoon aria-label="disabled" />
+    <IconSun class="swap-off w-full h-full" />
+    <IconMoon class="swap-on w-full h-full" />
   </label>
 
   <header>
@@ -97,15 +101,12 @@ function toast(message: string, type: ToastType = null) {
   </header>
 
   <main>
-    <DishSummary />
+    <DishSummary @recipe-saved="save" />
     <!-- <DishSummary :reset="reset" :save="save" /> -->
 
     <DefaultModal ref="modal" :title="modalData.title" :size="modalData.size">
-      <LazyComponents
-        :component="modalData.component"
-        :props-to-pass="modalData.props"
-        :emits-to-pass="modalData.emits"
-      />
+      <LazyComponents :component="modalData.component" :props-to-pass="modalData.props"
+        :emits-to-pass="modalData.emits" />
     </DefaultModal>
   </main>
 

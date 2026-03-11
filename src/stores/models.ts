@@ -1,5 +1,6 @@
 export enum Actions {
   RECIPES = 'recipes',
+  PREFERENCE = 'preference',
 }
 
 export enum Nutrients {

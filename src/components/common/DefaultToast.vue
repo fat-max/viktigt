@@ -32,7 +32,7 @@ watch(
     fadeOut.value = ''
 
     setTimeout(() => {
-      fadeOut.value = 'translate-y-[100px]'
+      fadeOut.value = 'translate-y-[100px] duration-2500'
     }, 2000)
   },
 )
@@ -42,7 +42,7 @@ const fade = computed(() => fadeOut.value)
 
 <template>
   <div class="toast toast-center">
-    <div class="alert transition duration-2500 ease-in-out" :class="`${typeClass} ${fade}`">
+    <div class="alert transition ease-in-out" :class="`${typeClass} ${fade}`">
       <span>
         {{ props.message }}
       </span>

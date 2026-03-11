@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { defineAsyncComponent, computed } from 'vue'
 
-export type Component = 'RecipesList'
+export type Component = 'PreferenceForm' | 'RecipesList'
 
 const props = defineProps<{
   component: Component
@@ -10,7 +10,7 @@ const props = defineProps<{
 }>()
 
 const asyncComponents = {
-  // DishForm: defineAsyncComponent(() => import('@/components/DishForm.vue')),
+  PreferenceForm: defineAsyncComponent(() => import('@/components/PreferenceForm.vue')),
   RecipesList: defineAsyncComponent(() => import('@/components/RecipesList.vue')),
 }
 const currentComponent = computed(() => asyncComponents[props.component])
