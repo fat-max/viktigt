@@ -1,20 +1,13 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
+import { defaultTags } from './default'
 
-export const useTagsStore = defineStore('tags', () => {
-  const tags = useLocalStorage<string[]>('tags', [
-    'frukost',
-    'lunch',
-    'mellanmål',
-    'middag',
-    'kvällsmat',
-  ])
+export const useTagStore = defineStore('tags', () => {
+  const tags = useLocalStorage<string[]>('tags', defaultTags)
 
   function addTag(tag: string) {
-    tag = tag.toLowerCase()
-
-    if (tags.value.some((t: string) => t.toLowerCase() == tag)) return
+    if (tags.value.some((t: string) => t.toLowerCase() == tag.toLowerCase())) return
 
     tags.value.push(tag)
   }

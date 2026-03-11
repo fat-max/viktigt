@@ -9,51 +9,35 @@ import {
 } from '@headlessui/vue'
 import { useFloating, offset, flip, shift, autoUpdate } from '@floating-ui/vue'
 
-export interface Option {
-  label: string
-  value: string | number
-}
-
 interface Props {
-  modelValue: Option | Option[] | null
-  options?: Option[]
+  modelValue: any
+  options?: any
   placeholder?: string
   multiple?: boolean
-  fetch?: (query: string) => Promise<Option[]>
+  labelKey?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  placeholder: 'Select option',
+  placeholder: 'Välj alternativ',
   multiple: false,
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: Option | Option[] | null): void
+  (e: 'update:modelValue', value: any): void
 }>()
 
 const query = ref('')
-const internalOptions = ref<Option[]>(props.options ?? [])
-
+// const model = defineModel()
 const selected = computed({
   get: () => props.modelValue,
-  set: (v) => emit('update:modelValue', v),
-})
-
-/* async search debounce */
-let timeout: number | undefined
-watch(query, async (q) => {
-  if (!props.fetch) return
-  clearTimeout(timeout)
-  timeout = window.setTimeout(async () => {
-    internalOptions.value = await props.fetch!(q)
-  }, 250)
+  set: v => emit("update:modelValue", v)
 })
 
 const filteredOptions = computed(() => {
-  if (props.fetch) return internalOptions.value
-  if (!query.value) return internalOptions.value
-  return internalOptions.value.filter((o) =>
-    o.label.toLowerCase().includes(query.value.toLowerCase()),
+  if (query.value.length < 3 && props.options.length > 40) return []
+
+  return props.options.filter((o: any) =>
+    (props.labelKey ? o[props.labelKey] : o).toLowerCase().includes(query.value.toLowerCase()),
   )
 })
 
@@ -65,67 +49,40 @@ const { floatingStyles } = useFloating(reference, floating, {
   whileElementsMounted: autoUpdate,
 })
 
-function removeTag(option: Option) {
+function removeTag(option: any) {
   if (!Array.isArray(selected.value)) return
+
   selected.value = selected.value.filter((o) => o.value !== option.value)
 }
 </script>
 
 <template>
-  <Combobox v-model="selected" :multiple="multiple" class="w-full">
-    <div class="relative">
-      <!-- input with inline badges -->
-      <div
-        ref="reference"
-        class="input input-bordered flex flex-wrap items-center gap-1 w-full min-h-[3rem] cursor-text"
-      >
-        <!-- badges -->
-        <span
-          v-if="multiple && Array.isArray(selected)"
-          v-for="item in selected"
-          :key="item.value"
-          class="badge badge-primary gap-1 flex items-center"
-        >
-          {{ item.label }}
+  <Combobox v-model="selected" :multiple="multiple">
+    <div class="w-full">
+      <div ref="reference" class="flex flex-wrap items-center gap-1 w-full min-h-[3rem] cursor-text">
+        <span v-if="multiple && Array.isArray(modelValue)" v-for="item in modelValue" :key="item"
+          class="badge badge-primary gap-1 flex items-center">
+          {{ labelKey ? item[labelKey] : item }}
           <button class="ml-1" @click.stop="removeTag(item)">✕</button>
         </span>
 
-        <!-- search input -->
-        <ComboboxInput
-          class="flex-1 min-w-[120px] bg-transparent outline-none"
-          :placeholder="placeholder"
-          :displayValue="(o: any) => o?.label ?? ''"
-          @input="query = ($event.target as HTMLInputElement).value"
-        />
+        <ComboboxInput class="flex-1 min-w-[120px] bg-transparent outline-none" autocomplete="off"
+          :placeholder="placeholder" :displayValue="(o: any) => (labelKey ? o?.[labelKey] : o) ?? ''"
+          @input="query = ($event.target as HTMLInputElement).value" />
 
-        <!-- caret -->
         <ComboboxButton class="opacity-60 px-1">▼</ComboboxButton>
       </div>
 
-      <!-- dropdown -->
-      <ComboboxOptions
-        ref="floating"
-        :style="floatingStyles"
-        class="menu bg-base-100 shadow-lg rounded-box border border-base-300 z-50 w-full max-h-64 overflow-auto"
-      >
-        <ComboboxOption
-          v-for="option in filteredOptions"
-          :key="option.value"
-          :value="option"
-          v-slot="{ active, selected }"
-        >
-          <li>
-            <button
-              class="w-full text-left rounded px-3 py-2"
-              :class="{ 'bg-primary text-primary-content': active }"
-            >
-              {{ option.label }}
-              <span v-if="selected" class="float-right">✓</span>
-            </button>
-          </li>
+      <ComboboxOptions ref="floating" :style="floatingStyles"
+        class="bg-base-100 shadow-lg rounded-box border border-base-300 z-50 w-full max-h-64 overflow-auto">
+        <ComboboxOption v-for="option in filteredOptions" :key="option" :value="option" v-slot="{ active, selected }">
+          <button class="w-full text-left rounded px-3 py-2" :class="{ 'bg-primary text-primary-content': active }">
+            {{ labelKey ? option[labelKey] : option }}
+            <span v-if="selected" class="float-right">✓</span>
+          </button>
         </ComboboxOption>
 
-        <li v-if="!filteredOptions.length" class="px-3 py-2 opacity-60">No results</li>
+        <li v-if="!filteredOptions.length" class="px-3 py-2 opacity-60">Inget resultat</li>
       </ComboboxOptions>
     </div>
   </Combobox>

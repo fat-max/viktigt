@@ -4,14 +4,13 @@ import { useEditStore } from './stores/edit'
 import FoodSearch from './components/IngredientSearch.vue'
 import FabMenu from './components/FabMenu.vue'
 import DishSummary from './components/DishSummary.vue'
-import DefaultModal from './components/common/DefaultModal.vue'
+import DefaultModal, { type Size } from './components/common/DefaultModal.vue'
 import DefaultToast, { type ToastType } from './components/common/DefaultToast.vue'
 import LazyComponents, { type Component } from './components/common/LazyComponents.vue'
 import { Actions, type Recipe } from './stores/models'
-import { IconCarrot } from './components/icons'
-// import DaisySelect from '@/components/common/DaisySelect.vue'
+import { IconCarrot, IconMoon, IconSun } from './components/icons'
 
-const { addIngredient, reset, setRecipe } = useEditStore()
+const { addIngredient, setRecipe } = useEditStore()
 const modal = useTemplateRef('modal')
 const toastMessage = ref<string>('')
 const toastType = ref<ToastType>(null)
@@ -20,6 +19,7 @@ const modalData = reactive<{
   title: string | null
   props: Object
   emits: Object
+  size?: Size
 }>({
   component: 'RecipesList',
   title: null,
@@ -30,42 +30,48 @@ const modalData = reactive<{
 function fabHandler(action: string) {
   switch (action) {
     case Actions.RECIPES:
-      openModal('RecipesList', 'Mina recept', {
-        size: 'lg',
-        onClick: (recipe: Recipe) => {
-          setRecipe(recipe)
-          modal.value?.ref?.close()
+      openModal(
+        'RecipesList',
+        'Mina recept',
+        {
+          onClick: (recipe: Recipe) => {
+            setRecipe(recipe)
+            modal.value?.ref?.close()
+          },
         },
-      })
+        {},
+        'lg',
+      )
       break
   }
 }
 
-function save() {
-  openModal(
-    'DishForm',
-    null,
-    { size: 'md' },
-    {
-      dishSaved: (name: string) => {
-        modal.value?.ref?.close()
-        toast(`Receptet "${name}" sparat`, 'success')
-      },
-    },
-  )
-}
+// function save() {
+//   openModal(
+//     'DishForm',
+//     null,
+//     {},
+//     {
+//       dishSaved: (name: string) => {
+//         modal.value?.ref?.close()
+//         toast(`Receptet "${name}" sparat`, 'success')
+//       },
+//     },
+//   )
+// }
 
 const openModal = (
   comp: Component,
   title: string | null = null,
   props: Object = {},
   emits: Object = {},
+  size: Size = 'md',
 ) => {
-  // console.log(props)
   modalData.title = title
   modalData.component = comp
   modalData.props = props
   modalData.emits = emits
+  modalData.size = size
 
   modal.value?.ref?.showModal()
 }
@@ -74,43 +80,33 @@ function toast(message: string, type: ToastType = null) {
   toastMessage.value = message
   toastType.value = type
 }
-
-// const users = [
-//   { value: 1, label: "Alice" },
-//   { value: 2, label: "Bob" },
-//   { value: 3, label: "Charlie" }
-// ]
-
-// const selectedUsers = ref<any[]>([])
 </script>
 
 <template>
-  <!-- <div class="p-6 max-w-md">
-    <DaisySelect v-model="selectedUsers" multiple :options="users" label-key="name" value-key="id"
-      placeholder="Select users" />
-    <p class="mt-4">Selected: {{selectedUsers.map(u => u.name).join(', ')}}</p>
-  </div> -->
+  <label class="absolute right-4 top-4 toggle">
+    <input type="checkbox" class="theme-controller" value="cupcake" />
+    <IconSun aria-label="enabled" />
+    <IconMoon aria-label="disabled" />
+  </label>
 
   <header>
-    <h1 class="text-4xl font-extrabold text-center sm:text-6xl text-accent">
+    <h1 class="text-4xl font-extrabold text-center sm:text-6xl text-primary">
       <IconCarrot class="size-10 sm:size-16 inline-block" /> viktigare
     </h1>
     <FoodSearch @selected="addIngredient" />
   </header>
 
   <main>
-    <DishSummary :reset="reset" :save="save" />
+    <DishSummary />
+    <!-- <DishSummary :reset="reset" :save="save" /> -->
 
-    <DefaultModal ref="modal" :title="modalData.title">
-      <LazyComponents
-        :component="modalData.component"
-        :props-to-pass="modalData.props"
-        :emits-to-pass="modalData.emits"
-      />
+    <DefaultModal ref="modal" :title="modalData.title" :size="modalData.size">
+      <LazyComponents :component="modalData.component" :props-to-pass="modalData.props"
+        :emits-to-pass="modalData.emits" />
     </DefaultModal>
   </main>
 
   <FabMenu @action="fabHandler" />
   <DefaultToast :type="toastType" :message="toastMessage" />
-  <IconCarrot class="fixed bottom-4 left-4 w-48 opacity-40" />
+  <IconCarrot class="fixed -z-10 bottom-4 left-4 w-24 sm:w-48 opacity-40" />
 </template>

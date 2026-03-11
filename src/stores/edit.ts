@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useSettingsStore } from './settings'
 import type { Recipe, Ingredient } from './models'
 
@@ -29,10 +29,9 @@ export const useEditStore = defineStore('edit', () => {
   }
 
   const reset = () => {
+    console.log(defaultRecipe)
     recipe.value = defaultRecipe
   }
 
-  const ingredients = computed(() => recipe.value.ingredients)
-
-  return { recipe, ingredients, addIngredient, removeIngredient, setRecipe, reset }
+  return { recipe, addIngredient, removeIngredient, setRecipe, reset }
 })

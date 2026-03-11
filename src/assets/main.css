@@ -1,63 +1,11 @@
 @import 'tailwindcss';
-@plugin "daisyui";
-
-/* main container */
-.tagify {
-  @apply input w-full flex flex-wrap gap-1 p-2 min-h-12 bg-base-100;
+@plugin "daisyui" {
+  themes:
+    cupcake --default,
+    dark --prefersdark;
 }
 
-/* tag badges */
-.tagify__tag {
-  @apply badge badge-primary gap-1 px-2 transition-all duration-200;
-}
-
-/* remove animation */
-.tagify__tag:hover {
-  transform: scale(1.05);
-}
-
-/* remove button */
-.tagify__tag__removeBtn {
-  @apply text-xs opacity-70 hover:opacity-100;
-}
-
-/* text input */
-.tagify__input {
-  @apply outline-none flex-grow;
-}
-
-/* dropdown */
-.tagify__dropdown {
-  @apply menu bg-base-100 shadow-lg rounded-box mt-1 p-2 border border-base-300;
-}
-
-/* dropdown items */
-.tagify__dropdown__item {
-  @apply px-3 py-2 hover:bg-base-200 rounded cursor-pointer;
-}
-
-/* active suggestion */
-.tagify__dropdown__item--active {
-  @apply bg-primary text-primary-content;
-}
-
-/* category colors */
-.tagify__tag[data-type='frukost'] {
-  @apply badge-success;
-}
-
-.tagify__tag[data-type='lunch'] {
-  @apply badge-info;
-}
-
-.tagify__tag[data-type='mellanmål'] {
-  @apply badge-secondary;
-}
-
-.tagify__tag[data-type='middag'] {
-  @apply badge-primary;
-}
-
-.tagify__tag[data-type='kvällsmat'] {
-  @apply badge-accent;
+.table,
+.input {
+  position: inherit;
 }
