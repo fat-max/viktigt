@@ -26,8 +26,13 @@ watch(selected, (ingredient: any) => {
   <div class="relative">
     <label class="input w-full relative">
       <IconSearch class="h-[1em] opacity-50" />
-      <DaisySelect v-model="selected" :options="nutrients" label-key="Livsmedelsnamn"
-        :value-key="(option: any) => option" placeholder="Sök livsmedel..." />
+      <DaisySelect
+        v-model="selected"
+        :options="nutrients"
+        label-key="Livsmedelsnamn"
+        :value-key="(option: any) => option"
+        placeholder="Sök livsmedel..."
+      />
     </label>
   </div>
 </template>

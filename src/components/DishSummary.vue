@@ -54,7 +54,10 @@ function save() {
     <div class="grid grid-cols-4 gap-2 my-4">
       <div v-for="n in nutrients" :key="n.type" class="flex flex-col gap-2 cursor-default">
         <div class="stat-title">{{ n.label }}</div>
-        <div class="flex gap-2 w-full font-semibold text-3xl items-center justify-center" :class="color(n.type)">
+        <div
+          class="flex gap-2 w-full font-semibold text-3xl items-center justify-center"
+          :class="color(n.type)"
+        >
           {{ n.amount }}
           <IconEnergy v-if="n.type == Nutrients.ENERGY" class="inline-block h-8 w-8" />
           <IconDrop v-if="n.type == Nutrients.FAT" class="inline-block h-8 w-8" />
@@ -74,13 +77,25 @@ function save() {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="ingredient in recipe.ingredients" :key="ingredient.Livsmedelsnamn" class="hover:bg-base-300">
+          <tr
+            v-for="ingredient in recipe.ingredients"
+            :key="ingredient.Livsmedelsnamn"
+            class="hover:bg-base-300"
+          >
             <td>{{ ingredient.Livsmedelsnamn }}</td>
             <td>
-              <input type="number" v-model="ingredient.weight" class="input input-xs w-16" placeholder="Gram (g)" />
+              <input
+                type="number"
+                v-model="ingredient.weight"
+                class="input input-xs w-16"
+                placeholder="Gram (g)"
+              />
             </td>
             <td>
-              <button class="btn btn-xs btn-error btn-ghost btn-circle" @click="removeIngredient(ingredient)">
+              <button
+                class="btn btn-xs btn-error btn-ghost btn-circle"
+                @click="removeIngredient(ingredient)"
+              >
                 X
               </button>
             </td>
@@ -92,7 +107,12 @@ function save() {
     <fieldset class="fieldset flex gap-2" v-if="recipe.ingredients.length">
       <div>
         <label class="label">Namn*</label>
-        <input type="text" class="input w-full input-sm" placeholder="Flygande jacob" v-model="recipe.name" />
+        <input
+          type="text"
+          class="input w-full input-sm"
+          placeholder="Flygande jacob"
+          v-model="recipe.name"
+        />
       </div>
       <div class="flex-0">
         <label class="label">Portioner*</label>
@@ -100,8 +120,13 @@ function save() {
       </div>
       <div class="flex-1">
         <label class="label">Taggar</label>
-        <DaisySelect v-model="recipe.tags" multiple :options="tags" class="input input-sm w-full"
-          placeholder="Lunch, LCHF" />
+        <DaisySelect
+          v-model="recipe.tags"
+          multiple
+          :options="tags"
+          class="input input-sm w-full"
+          placeholder="Lunch, LCHF"
+        />
       </div>
     </fieldset>
 
