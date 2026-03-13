@@ -24,7 +24,7 @@ export function nutrientsCalculator(recipe: Recipe | null, perPortion = false) {
 
   return nutrients.map((n) => {
     // @ts-ignore
-    n.amount = Math.round(n.amount / (perPortion ? recipe.portions : 1) * 10) / 10
+    n.amount = Math.round((n.amount / (perPortion ? recipe.portions : 1)) * 10) / 10
     return n
   })
 }

@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { IconPreference, IconDots, IconRecipes } from './icons'
-import { Actions } from '@/stores/models'
-const emit = defineEmits(['action'])
+import { type Recipe } from '@/stores/models'
+import { useEditStore } from '@/stores'
+import PreferenceForm from './PreferenceForm.vue'
+import RecipesList from './RecipesList.vue'
+import { useModal } from '@/composables/useModal'
+
+const { open, close } = useModal(null)
+const { setRecipe } = useEditStore()
+
 </script>
 
 <template>
@@ -17,13 +24,22 @@ const emit = defineEmits(['action'])
 
     <div>
       Recept
-      <button class="btn btn-circle btn-lg" @click="emit('action', Actions.RECIPES)">
+      <button class="btn btn-circle btn-lg" @click="open({
+        component: RecipesList, title: 'Mina recept', props: {
+          onClick: (recipe: Recipe) => {
+            setRecipe(recipe)
+            close()
+          },
+        },
+        size: 'lg'
+      })">
         <IconRecipes class="size-6" />
       </button>
     </div>
     <div>
       Inställningar
-      <button class="btn btn-circle btn-lg" @click="emit('action', Actions.PREFERENCE)">
+      <button class="btn btn-circle btn-lg"
+        @click="open({ component: PreferenceForm, title: 'Standardinställningar', size: 'xs' })">
         <IconPreference class="size-6" />
       </button>
     </div>

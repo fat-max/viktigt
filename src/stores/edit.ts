@@ -1,18 +1,18 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { ref } from 'vue'
-import { useSettingsStore } from './settings'
+import { usePreferenceStore } from './preference'
 import type { Recipe, Ingredient } from './models'
 
 export const useEditStore = defineStore('edit', () => {
-  const { settings } = storeToRefs(useSettingsStore())
-  const defaultRecipe = { name: '', portions: settings.value.portions, ingredients: [] }
+  const { preference } = storeToRefs(usePreferenceStore())
+  const defaultRecipe = { name: '', portions: preference.value.portions, ingredients: [] }
   const recipe = ref<Recipe>(defaultRecipe)
 
   function addIngredient(ingredient: Ingredient) {
     if (recipe.value.ingredients.some((l) => l.Livsmedelsnummer == ingredient.Livsmedelsnummer))
       return
 
-    recipe.value.ingredients.push({ ...ingredient, ...{ weight: settings.value.weight } })
+    recipe.value.ingredients.push({ ...ingredient, ...{ weight: preference.value.weight } })
   }
 
   function removeIngredient(ingredient: Ingredient) {

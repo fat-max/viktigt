@@ -1,5 +1,6 @@
 import IconCarrot from './IconCarrot.vue'
 import IconCogs from './IconCogs.vue'
+import IconDetails from './IconDetails.vue'
 import IconDots from './IconDots.vue'
 import IconDrop from './IconDrop.vue'
 import IconDrumstick from './IconDrumstick.vue'
@@ -17,6 +18,7 @@ import IconWheat from './IconWheat.vue'
 export {
   IconCarrot,
   IconCogs,
+  IconDetails,
   IconDots,
   IconDrop,
   IconDrumstick,

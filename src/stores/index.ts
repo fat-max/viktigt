@@ -1,6 +1,6 @@
 import { useEditStore } from './edit'
 import { useRecipesStore } from './recipes'
-import { useSettingsStore } from './settings'
+import { usePreferenceStore } from './preference'
 import { useTagStore } from './tags'
 
-export { useEditStore, useRecipesStore, useSettingsStore, useTagStore }
+export { useEditStore, useRecipesStore, usePreferenceStore, useTagStore }
