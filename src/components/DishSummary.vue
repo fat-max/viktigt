@@ -19,7 +19,6 @@ const { removeIngredient, reset } = useEditStore()
 const { tags } = storeToRefs(useTagStore())
 const { preference } = usePreferenceStore()
 
-
 const nutrients = computed(() => nutrientsCalculator(recipe.value))
 
 function color(type: string) {
@@ -59,14 +58,14 @@ function save() {
           <IconWheat v-if="n.type == Nutrients.CARBOHYDRATES" class="inline-block size-5" />
         </div>
       </div>
-      <div class="flex flex-col gap-2 cursor-default justify-center">
+      <!-- <div class="flexcursor-default justify-center">
         <div class="tooltip tooltip-bottom" data-tip="Detaljerad innehållslista">
           <button class="btn btn-md btn-circle btn-ghost" :disabled="recipe.ingredients.length == 0"
             @click="open({ component: DishDetails, title: 'Sammanställning' })">
             <IconDetails class="size-8" />
           </button>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div v-if="recipe.ingredients.length" tabindex="0"

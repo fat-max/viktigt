@@ -58,46 +58,24 @@ function removeTag(option: any) {
 <template>
   <Combobox v-model="selected" :multiple="multiple">
     <div class="w-full">
-      <div
-        ref="reference"
-        class="flex flex-wrap items-center gap-1 w-full min-h-[3rem] cursor-text"
-      >
-        <span
-          v-if="multiple && Array.isArray(modelValue)"
-          v-for="item in modelValue"
-          :key="item"
-          class="badge badge-primary gap-1 flex items-center"
-        >
+      <div ref="reference" class="flex flex-wrap items-center gap-1 w-full min-h-[3rem] cursor-text">
+        <span v-if="multiple && Array.isArray(modelValue)" v-for="item in modelValue" :key="item"
+          class="badge badge-primary gap-1 flex items-center">
           {{ labelKey ? item[labelKey] : item }}
           <button class="ml-1" @click.stop="removeTag(item)">✕</button>
         </span>
 
-        <ComboboxInput
-          class="flex-1 min-w-[120px] bg-transparent outline-none"
-          autocomplete="off"
-          :placeholder="placeholder"
-          :displayValue="(o: any) => (labelKey ? o?.[labelKey] : o) ?? ''"
-          @input="query = ($event.target as HTMLInputElement).value"
-        />
+        <ComboboxInput class="flex-1 min-w-[120px] bg-transparent outline-none" autocomplete="off"
+          :placeholder="placeholder" :displayValue="(o: any) => (labelKey ? o?.[labelKey] : o) ?? ''"
+          @input="query = ($event.target as HTMLInputElement).value" />
 
         <ComboboxButton class="opacity-60 px-1">▼</ComboboxButton>
       </div>
 
-      <ComboboxOptions
-        ref="floating"
-        :style="floatingStyles"
-        class="bg-base-100 shadow-lg rounded-box border border-base-300 z-50 w-full max-h-64 overflow-auto"
-      >
-        <ComboboxOption
-          v-for="option in filteredOptions"
-          :key="option"
-          :value="option"
-          v-slot="{ active, selected }"
-        >
-          <button
-            class="w-full text-left rounded px-3 py-2"
-            :class="{ 'bg-primary text-primary-content': active }"
-          >
+      <ComboboxOptions ref="floating" :style="floatingStyles"
+        class="bg-base-100 shadow-lg rounded-box border border-base-300 z-50 w-full max-h-64 overflow-auto">
+        <ComboboxOption v-for="option in filteredOptions" :key="option" :value="option" v-slot="{ active, selected }">
+          <button class="w-full text-left rounded px-3 py-2" :class="{ 'bg-primary text-primary-content': active }">
             {{ labelKey ? option[labelKey] : option }}
             <span v-if="selected" class="float-right">✓</span>
           </button>

@@ -8,7 +8,6 @@ import { useModal } from '@/composables/useModal'
 
 const { open, close } = useModal(null)
 const { setRecipe } = useEditStore()
-
 </script>
 
 <template>
@@ -24,22 +23,31 @@ const { setRecipe } = useEditStore()
 
     <div>
       Recept
-      <button class="btn btn-circle btn-lg" @click="open({
-        component: RecipesList, title: 'Mina recept', props: {
-          onClick: (recipe: Recipe) => {
-            setRecipe(recipe)
-            close()
-          },
-        },
-        size: 'lg'
-      })">
+      <button
+        class="btn btn-circle btn-lg"
+        @click="
+          open({
+            component: RecipesList,
+            title: 'Mina recept',
+            props: {
+              onClick: (recipe: Recipe) => {
+                setRecipe(recipe)
+                close()
+              },
+            },
+            size: 'lg',
+          })
+        "
+      >
         <IconRecipes class="size-6" />
       </button>
     </div>
     <div>
       Inställningar
-      <button class="btn btn-circle btn-lg"
-        @click="open({ component: PreferenceForm, title: 'Standardinställningar', size: 'xs' })">
+      <button
+        class="btn btn-circle btn-lg"
+        @click="open({ component: PreferenceForm, title: 'Standardinställningar', size: 'xs' })"
+      >
         <IconPreference class="size-6" />
       </button>
     </div>

@@ -1,4 +1,3 @@
-
 import { shallowRef } from 'vue'
 import type { Ref, Component } from 'vue'
 import { useEventBus } from '@vueuse/core'
@@ -33,7 +32,17 @@ export function useModal(modal: any) {
     modal?.value?.showModal()
   })
 
-  const open = ({ component, title = '', props = {}, size = 'md' }: {component: Component, title?: string, props?: Object, size?: string}) => {
+  const open = ({
+    component,
+    title = '',
+    props = {},
+    size = 'md',
+  }: {
+    component: Component
+    title?: string
+    props?: Object
+    size?: string
+  }) => {
     emit({ componentRef: component, titleRef: title, propsRef: props, sizeRef: size })
   }
 

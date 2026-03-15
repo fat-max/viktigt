@@ -6,6 +6,14 @@
 }
 
 .table,
-.input {
-  position: inherit;
+.input,
+.collapse,
+.collapse-arrow,
+.collapse-title,
+.floating-label {
+  position: inherit !important;
 }
+
+/* * {
+  position: inherit;
+} */
